@@ -12,12 +12,13 @@ color_image = o3d.io.read_image(r"data\20260716112715_Color.png")
 rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(
     color_image,
     depth_image,
-    depth_scale=1.0,
+    depth_scale=1.0, # 深度单位为米
     depth_trunc=20.0,
     convert_rgb_to_intensity=False
 )
 
 # 相机参数
+# 替换为自己的相机参数
 intrinsic = o3d.camera.PinholeCameraIntrinsic(
     width=depth_array.shape[1],
     height=depth_array.shape[0],
@@ -27,7 +28,7 @@ intrinsic = o3d.camera.PinholeCameraIntrinsic(
     cy=398.5,
 )
 
-# 生成点云（用 create_from_rgbd_image，不是 create_from_depth_image）
+# 生成点云
 pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, intrinsic)
 
 o3d.io.write_point_cloud("pointcloud1.ply", pcd)
